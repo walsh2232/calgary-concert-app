@@ -21,7 +21,7 @@ return (
 <Route path="/list" element={<ListView />} />
 <Route path="/admin" element={<AdminPage />} />
 <Route path="/login" element={<Login />} />
-Route path="/signup" element={<Signup />} />
+<Route path="/signup" element={<Signup />} />
 </Routes>
 </Router>
 );
