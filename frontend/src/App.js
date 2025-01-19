@@ -14,7 +14,7 @@ function App() {
         <Link to="/list">My List</Link>
         <Link to="/admin">Admin</Link>
         <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link>
+        <Link to="/signup">Sign Up</Link>
       </nav>
       <Routes>
         <Route path="/" element={<CardView />} />
