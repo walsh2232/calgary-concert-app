@@ -1,0 +1,291 @@
+# {{ module_name }} Module Analysis Report
+
+**Generated:** {{ metadata.generated_at }}  
+**System:** {{ metadata.analysis_config.system_name }}  
+**Module:** {{ module_name }}
+
+## Module Overview
+
+This report provides a comprehensive analysis of the {{ module_name }} module within the Oracle HCM system. The analysis covers {{ pages|length }} pages, {{ features|length }} features, and {{ best_practices|length }} best practices specific to this module.
+
+## Pages Analysis
+
+### Summary Statistics
+- **Total Pages:** {{ pages|length }}
+- **Average Complexity:** {{ "%.2f"|format(pages|map(attribute='complexity_score')|sum / pages|length if pages else 0) }}
+- **Average Load Time:** {{ "%.2f"|format(pages|map(attribute='load_time')|sum / pages|length if pages else 0) }} seconds
+- **Mobile Friendly:** {{ pages|selectattr('mobile_friendly', 'equalto', true)|list|length }}/{{ pages|length }}
+- **High Accessibility:** {{ pages|selectattr('accessibility_score', 'ge', 0.8)|list|length }}/{{ pages|length }}
+
+### Detailed Page Analysis
+
+{% for page in pages %}
+#### {{ page.title }}
+- **URL:** {{ page.url }}
+- **Complexity Score:** {{ "%.2f"|format(page.complexity_score) }}
+- **Load Time:** {{ "%.2f"|format(page.load_time) }} seconds
+- **Feature Count:** {{ page.feature_count }}
+- **Business Criticality:** {{ page.business_criticality }}
+- **Usage Frequency:** {{ page.usage_frequency }}
+- **Technical Debt:** {{ "%.2f"|format(page.technical_debt) }}
+
+**Forms:**
+{% for form in page.forms %}
+- {{ form }}
+{% endfor %}
+
+**Reports:**
+{% for report in page.reports %}
+- {{ report }}
+{% endfor %}
+
+**Workflows:**
+{% for workflow in page.workflows %}
+- {{ workflow }}
+{% endfor %}
+
+**Performance Notes:**
+{% for note in page.performance_notes %}
+- {{ note }}
+{% endfor %}
+
+**Recommendations:**
+{% for rec in page.recommendations %}
+- {{ rec }}
+{% endfor %}
+
+{% endfor %}
+
+## Features Analysis
+
+### Summary Statistics
+- **Total Features:** {{ features|length }}
+- **High Business Value:** {{ features|selectattr('business_value', 'equalto', 'high')|list|length }}
+- **High Complexity:** {{ features|selectattr('complexity', 'equalto', 'high')|list|length }}
+- **High Risk:** {{ features|selectattr('risk_level', 'equalto', 'high')|list|length }}
+
+### Feature Categories
+{% set categories = features|map(attribute='category')|unique|list %}
+{% for category in categories %}
+- **{{ category }}:** {{ features|selectattr('category', 'equalto', category)|list|length }} features
+{% endfor %}
+
+### Detailed Feature Analysis
+
+{% for feature in features %}
+#### {{ feature.name }}
+- **Category:** {{ feature.category }}
+- **Complexity:** {{ feature.complexity }}
+- **Business Value:** {{ feature.business_value }}
+- **Implementation Effort:** {{ feature.implementation_effort }}
+- **Risk Level:** {{ feature.risk_level }}
+- **ROI Timeline:** {{ feature.roi_timeline }}
+
+**Description:** {{ feature.description }}
+
+**Dependencies:**
+{% for dep in feature.dependencies %}
+- {{ dep }}
+{% endfor %}
+
+**API Endpoints:**
+{% for endpoint in feature.api_endpoints %}
+- {{ endpoint }}
+{% endfor %}
+
+**Configuration Options:**
+{% for option in feature.configuration_options %}
+- {{ option }}
+{% endfor %}
+
+**Common Issues:**
+{% for issue in feature.common_issues %}
+- {{ issue }}
+{% endfor %}
+
+**Security Considerations:**
+{% for security in feature.security_considerations %}
+- {{ security }}
+{% endfor %}
+
+{% endfor %}
+
+## Best Practices
+
+### Summary Statistics
+- **Total Best Practices:** {{ best_practices|length }}
+- **High Priority:** {{ best_practices|selectattr('priority', 'ge', 4)|list|length }}
+- **High Business Impact:** {{ best_practices|selectattr('business_impact', 'equalto', 'high')|list|length }}
+
+### Best Practices by Category
+{% set bp_categories = best_practices|map(attribute='category')|unique|list %}
+{% for category in bp_categories %}
+- **{{ category }}:** {{ best_practices|selectattr('category', 'equalto', category)|list|length }} practices
+{% endfor %}
+
+### Detailed Best Practices
+
+{% for bp in best_practices %}
+#### {{ bp.title }}
+- **Priority:** {{ bp.priority }}/5
+- **Category:** {{ bp.category }}
+- **Business Impact:** {{ bp.business_impact }}
+- **Estimated Effort:** {{ bp.estimated_effort }}
+- **Timeline:** {{ bp.timeline }}
+- **Cost Estimate:** {{ bp.cost_estimate }}
+
+**Description:** {{ bp.description }}
+
+**Implementation Steps:**
+{% for step in bp.implementation_steps %}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+
+**Prerequisites:**
+{% for prereq in bp.prerequisites %}
+- {{ prereq }}
+{% endfor %}
+
+**Required Resources:**
+{% for resource in bp.required_resources %}
+- {{ resource }}
+{% endfor %}
+
+**Benefits:**
+{% for benefit in bp.benefits %}
+- {{ benefit }}
+{% endfor %}
+
+**Business Impact Analysis:** {{ bp.business_impact_analysis }}
+
+**Risk Mitigation:**
+{% for risk in bp.risk_mitigation %}
+- {{ risk }}
+{% endfor %}
+
+**Metrics to Track:**
+{% for metric in bp.metrics_to_track %}
+- {{ metric }}
+{% endfor %}
+
+{% endfor %}
+
+## Module-Specific Recommendations
+
+### Immediate Actions (0-30 days)
+{% set immediate_bps = best_practices|selectattr('priority', 'equalto', 5)|list %}
+{% if immediate_bps %}
+{% for bp in immediate_bps %}
+- **{{ bp.title }}** - {{ bp.description[:100] }}...
+{% endfor %}
+{% else %}
+No immediate actions required at this time.
+{% endif %}
+
+### Short-term Improvements (1-3 months)
+{% set short_bps = best_practices|selectattr('priority', 'equalto', 4)|list %}
+{% if short_bps %}
+{% for bp in short_bps %}
+- **{{ bp.title }}** - {{ bp.description[:100] }}...
+{% endfor %}
+{% else %}
+No short-term improvements identified.
+{% endif %}
+
+### Medium-term Enhancements (3-6 months)
+{% set medium_bps = best_practices|selectattr('priority', 'equalto', 3)|list %}
+{% if medium_bps %}
+{% for bp in medium_bps %}
+- **{{ bp.title }}** - {{ bp.description[:100] }}...
+{% endfor %}
+{% else %}
+No medium-term enhancements identified.
+{% endif %}
+
+## Performance Metrics
+
+### Page Performance
+- **Pages with Load Time > 3s:** {{ pages|selectattr('load_time', 'gt', 3.0)|list|length }}
+- **Pages with High Complexity:** {{ pages|selectattr('complexity_score', 'gt', 0.7)|list|length }}
+- **Pages with Technical Debt:** {{ pages|selectattr('technical_debt', 'gt', 0.5)|list|length }}
+
+### Accessibility and Usability
+- **Mobile Friendly Pages:** {{ pages|selectattr('mobile_friendly', 'equalto', true)|list|length }}/{{ pages|length }}
+- **High Accessibility Score:** {{ pages|selectattr('accessibility_score', 'ge', 0.8)|list|length }}/{{ pages|length }}
+- **SEO Optimized:** {{ pages|selectattr('seo_score', 'ge', 0.8)|list|length }}/{{ pages|length }}
+
+## Integration Points
+
+### Workflow Integration
+- **Pages with Workflows:** {{ pages|selectattr('workflows', 'ne', [])|list|length }}/{{ pages|length }}
+- **Workflow Integration Score:** {{ "%.2f"|format(pages|selectattr('workflows', 'ne', [])|list|length / pages|length if pages else 0) }}
+
+### API Integration
+- **Features with API Endpoints:** {{ features|selectattr('api_endpoints', 'ne', [])|list|length }}/{{ features|length }}
+- **Integration Complexity:** {{ features|selectattr('category', 'equalto', 'Integration')|list|length }} integration features
+
+## Risk Assessment
+
+### High-Risk Areas
+{% set high_risk_features = features|selectattr('risk_level', 'equalto', 'high')|list %}
+{% if high_risk_features %}
+{% for feature in high_risk_features %}
+- **{{ feature.name }}** - {{ feature.category }} feature with high risk level
+{% endfor %}
+{% else %}
+No high-risk features identified in this module.
+{% endif %}
+
+### Security Considerations
+{% set security_features = features|selectattr('category', 'equalto', 'Security')|list %}
+{% if security_features %}
+{% for feature in security_features %}
+- **{{ feature.name }}** - {{ feature.description[:100] }}...
+{% endfor %}
+{% else %}
+No specific security features identified in this module.
+{% endif %}
+
+## Business Value Analysis
+
+### High-Value Features
+{% set high_value_features = features|selectattr('business_value', 'equalto', 'high')|list %}
+{% if high_value_features %}
+{% for feature in high_value_features %}
+- **{{ feature.name }}** - {{ feature.description[:100] }}...
+{% endfor %}
+{% else %}
+No high business value features identified in this module.
+{% endif %}
+
+### ROI Opportunities
+{% set high_priority_bps = best_practices|selectattr('priority', 'ge', 4)|list %}
+{% if high_priority_bps %}
+{% for bp in high_priority_bps %}
+- **{{ bp.title }}** - Estimated ROI timeline: {{ bp.timeline }}, Cost: {{ bp.cost_estimate }}
+{% endfor %}
+{% else %}
+No high-priority ROI opportunities identified in this module.
+{% endif %}
+
+## Conclusion
+
+The {{ module_name }} module analysis reveals {{ pages|length }} pages and {{ features|length }} features with varying levels of complexity and business value. The module has {{ best_practices|length }} identified best practices for improvement, with {{ best_practices|selectattr('priority', 'ge', 4)|list|length }} high-priority recommendations.
+
+Key focus areas include:
+- Performance optimization for {{ pages|selectattr('load_time', 'gt', 3.0)|list|length }} slow-loading pages
+- Accessibility improvements for {{ pages|selectattr('accessibility_score', 'lt', 0.8)|list|length }} pages below standards
+- Security enhancements for {{ features|selectattr('risk_level', 'equalto', 'high')|list|length }} high-risk features
+- Mobile responsiveness for {{ pages|selectattr('mobile_friendly', 'equalto', false)|list|length }} non-mobile-friendly pages
+
+Implementation of the identified best practices is expected to improve system performance, user experience, and business value while reducing technical debt and security risks.
+
+---
+
+*This module report was automatically generated by the Oracle HCM Analysis Platform as part of the comprehensive system analysis.*
+
+**Generated on:** {{ metadata.generated_at }}  
+**Module:** {{ module_name }}  
+**Total Pages Analyzed:** {{ pages|length }}  
+**Total Features Analyzed:** {{ features|length }}  
+**Total Best Practices:** {{ best_practices|length }}

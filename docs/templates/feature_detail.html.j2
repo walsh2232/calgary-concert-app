@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ feature.name }} - Oracle HCM Analysis Platform</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <meta name="description" content="Detailed analysis of {{ feature.name }} feature in Oracle HCM system">
+</head>
+<body>
+    <div class="header">
+        <h1>{{ feature.name }}</h1>
+        <p class="subtitle">Feature Analysis Report</p>
+        <div class="breadcrumbs">
+            <a href="index.html">Home</a> &gt; 
+            <a href="#features">Features</a> &gt; 
+            <span>{{ feature.name }}</span>
+        </div>
+    </div>
+
+    <div class="nav">
+        <nav class="main-nav">
+            <a href="index.html">← Back to Overview</a>
+            <a href="#overview">Feature Overview</a>
+            <a href="#details">Technical Details</a>
+            <a href="#usage">Usage & Configuration</a>
+            <a href="#best-practices">Best Practices</a>
+        </nav>
+    </div>
+
+    <div class="content">
+        <section id="overview">
+            <h2>Feature Overview</h2>
+            <div class="feature-overview">
+                <div class="feature-info">
+                    <h3>Basic Information</h3>
+                    <table class="info-table">
+                        <tr>
+                            <td><strong>Feature Name:</strong></td>
+                            <td>{{ feature.name }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Feature Type:</strong></td>
+                            <td><span class="badge badge-{{ feature.feature_type.value }}">{{ feature.feature_type.value }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complexity Level:</strong></td>
+                            <td><span class="badge badge-{{ feature.complexity.value }}">{{ feature.complexity.value }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Business Value:</strong></td>
+                            <td><span class="value-badge value-{{ feature.business_value }}">{{ feature.business_value }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Implementation Effort:</strong></td>
+                            <td><span class="effort-badge effort-{{ feature.implementation_effort }}">{{ feature.implementation_effort }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Last Updated:</strong></td>
+                            <td>{{ feature.last_updated }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="feature-description">
+                    <h3>Description</h3>
+                    <p>{{ feature.description }}</p>
+                </div>
+
+                {% if feature.keywords %}
+                <div class="feature-keywords">
+                    <h3>Keywords</h3>
+                    <div class="keyword-tags">
+                        {% for keyword in feature.keywords %}
+                        <span class="keyword-tag">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section id="details">
+            <h2>Technical Details</h2>
+            
+            {% if feature.technical_specifications %}
+            <div class="tech-specs">
+                <h3>Technical Specifications</h3>
+                <div class="specs-content">
+                    {{ feature.technical_specifications|safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if feature.dependencies %}
+            <div class="dependencies">
+                <h3>Dependencies</h3>
+                <ul class="dependency-list">
+                    {% for dependency in feature.dependencies %}
+                    <li>
+                        <strong>{{ dependency.name }}</strong>
+                        {% if dependency.version %}<span class="version">v{{ dependency.version }}</span>{% endif %}
+                        {% if dependency.description %}<p>{{ dependency.description }}</p>{% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if feature.configuration_options %}
+            <div class="config-options">
+                <h3>Configuration Options</h3>
+                <div class="config-grid">
+                    {% for option in feature.configuration_options %}
+                    <div class="config-option">
+                        <h4>{{ option.name }}</h4>
+                        <p>{{ option.description }}</p>
+                        <div class="option-meta">
+                            <span class="option-type">{{ option.option_type }}</span>
+                            {% if option.default_value %}<span class="default-value">Default: {{ option.default_value }}</span>{% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if feature.api_endpoints %}
+            <div class="api-endpoints">
+                <h3>API Endpoints</h3>
+                <div class="endpoints-grid">
+                    {% for endpoint in feature.api_endpoints %}
+                    <div class="endpoint-card">
+                        <div class="endpoint-header">
+                            <span class="http-method method-{{ endpoint.method|lower }}">{{ endpoint.method }}</span>
+                            <code class="endpoint-url">{{ endpoint.url }}</code>
+                        </div>
+                        <p class="endpoint-description">{{ endpoint.description }}</p>
+                        {% if endpoint.parameters %}
+                        <div class="endpoint-params">
+                            <strong>Parameters:</strong>
+                            <ul>
+                                {% for param in endpoint.parameters %}
+                                <li><code>{{ param.name }}</code> ({{ param.type }}) - {{ param.description }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section id="usage">
+            <h2>Usage & Configuration</h2>
+            
+            {% if feature.usage_examples %}
+            <div class="usage-examples">
+                <h3>Usage Examples</h3>
+                <div class="examples-grid">
+                    {% for example in feature.usage_examples %}
+                    <div class="example-card">
+                        <h4>{{ example.title }}</h4>
+                        <p>{{ example.description }}</p>
+                        {% if example.code %}
+                        <pre class="code-block"><code>{{ example.code }}</code></pre>
+                        {% endif %}
+                        {% if example.expected_output %}
+                        <div class="expected-output">
+                            <strong>Expected Output:</strong>
+                            <pre>{{ example.expected_output }}</pre>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if feature.setup_instructions %}
+            <div class="setup-instructions">
+                <h3>Setup Instructions</h3>
+                <div class="setup-content">
+                    {{ feature.setup_instructions|safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if feature.common_issues %}
+            <div class="common-issues">
+                <h3>Common Issues & Solutions</h3>
+                <div class="issues-grid">
+                    {% for issue in feature.common_issues %}
+                    <div class="issue-card">
+                        <h4>{{ issue.title }}</h4>
+                        <p class="issue-description">{{ issue.description }}</p>
+                        <div class="issue-solution">
+                            <strong>Solution:</strong>
+                            <p>{{ issue.solution }}</p>
+                        </div>
+                        {% if issue.prevention %}
+                        <div class="issue-prevention">
+                            <strong>Prevention:</strong>
+                            <p>{{ issue.prevention }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices</h2>
+            
+            {% if related_best_practices %}
+            <div class="best-practices-section">
+                <h3>Related Best Practices</h3>
+                <div class="bp-grid">
+                    {% for bp in related_best_practices %}
+                    <div class="bp-card priority-{{ bp.priority }}">
+                        <h4><a href="best_practice_{{ bp.id }}.html">{{ bp.title }}</a></h4>
+                        <p>{{ bp.description[:150] }}{% if bp.description|length > 150 %}...{% endif %}</p>
+                        <div class="bp-meta">
+                            <span class="category">{{ bp.category }}</span>
+                            <span class="priority priority-{{ bp.priority }}">Priority {{ bp.priority }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if feature.best_practices %}
+            <div class="feature-best-practices">
+                <h3>Feature-Specific Best Practices</h3>
+                <ul class="bp-list">
+                    {% for bp in feature.best_practices %}
+                    <li>{{ bp }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if feature.performance_tips %}
+            <div class="performance-tips">
+                <h3>Performance Tips</h3>
+                <ul class="tips-list">
+                    {% for tip in feature.performance_tips %}
+                    <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </section>
+
+        {% if feature.related_features %}
+        <section id="related">
+            <h2>Related Features</h2>
+            <p>Features that are closely related to {{ feature.name }}:</p>
+            <div class="related-features-grid">
+                {% for related in feature.related_features %}
+                <div class="related-feature-card">
+                    <h4><a href="feature_{{ related.id }}.html">{{ related.name }}</a></h4>
+                    <p>{{ related.description[:100] }}{% if related.description|length > 100 %}...{% endif %}</p>
+                    <span class="feature-type">{{ related.feature_type.value }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <p>&copy; {{ metadata.generated_at[:4] }} Oracle HCM Analysis Platform</p>
+        <p><a href="index.html">← Back to Overview</a></p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis - Oracle HCM Analysis Platform{% endblock %}
+
+{% block content %}
+<div class="px-4 py-6 sm:px-0">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">System Analysis</h1>
+        <p class="mt-2 text-gray-600">Configure and run comprehensive analysis of your Oracle HCM Cloud system</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2">
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Analysis Configuration</h3>
+                </div>
+                <div class="p-6">
+                    <form id="analysisForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Modules to Analyze</label>
+                            <div class="grid grid-cols-2 gap-4" id="modulesGrid">
+                                <!-- Modules will be populated by JavaScript -->
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Analysis Depth</label>
+                            <select id="analysisDepth" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="basic">Basic</option>
+                                <option value="standard" selected>Standard</option>
+                                <option value="comprehensive">Comprehensive</option>
+                                <option value="expert">Expert</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Additional Options</label>
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="performanceMetrics" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-2 text-sm text-gray-700">Include Performance Metrics</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="securityAnalysis" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-2 text-sm text-gray-700">Include Security Analysis</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" id="bestPractices" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                                    <span class="ml-2 text-sm text-gray-700">Include Best Practices</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="pt-4">
+                            <button type="submit" id="runAnalysisBtn" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <i data-feather="play" class="w-4 h-4 mr-2"></i>
+                                Run Analysis
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-1">
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Analysis History</h3>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-4" id="analysisHistory">
+                        <!-- History will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="analysisResults" class="mt-8 hidden">
+        <div class="bg-white shadow rounded-lg">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h3 class="text-lg font-medium text-gray-900">Analysis Results</h3>
+            </div>
+            <div class="p-6">
+                <div id="resultsContent">
+                    <!-- Results will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadModules();
+    loadAnalysisHistory();
+    
+    document.getElementById('analysisForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        runAnalysis();
+    });
+});
+
+async function loadModules() {
+    try {
+        const response = await fetch('/api/get-modules');
+        const modules = await response.json();
+        
+        const modulesGrid = document.getElementById('modulesGrid');
+        modulesGrid.innerHTML = modules.map(module => `
+            <label class="flex items-center">
+                <input type="checkbox" value="${module.id}" checked class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                <span class="ml-2 text-sm text-gray-700">${module.name}</span>
+            </label>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading modules:', error);
+    }
+}
+
+async function loadAnalysisHistory() {
+    try {
+        const response = await fetch('/api/get-analysis-history');
+        const history = await response.json();
+        
+        const historyContainer = document.getElementById('analysisHistory');
+        historyContainer.innerHTML = history.map(item => `
+            <div class="p-3 bg-gray-50 rounded-lg">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">${item.modules.join(', ')}</p>
+                        <p class="text-xs text-gray-500">${item.date}</p>
+                    </div>
+                    <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                        ${item.status}
+                    </span>
+                </div>
+                <div class="mt-2 text-xs text-gray-600">
+                    ${item.findings} findings • ${item.duration}
+                </div>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error('Error loading history:', error);
+    }
+}
+
+async function runAnalysis() {
+    const runBtn = document.getElementById('runAnalysisBtn');
+    const originalText = runBtn.innerHTML;
+    
+    runBtn.disabled = true;
+    runBtn.innerHTML = '<i data-feather="loader" class="w-4 h-4 mr-2 animate-spin"></i>Running Analysis...';
+    
+    const selectedModules = Array.from(document.querySelectorAll('#modulesGrid input:checked')).map(input => input.value);
+    const analysisDepth = document.getElementById('analysisDepth').value;
+    const performanceMetrics = document.getElementById('performanceMetrics').checked;
+    const securityAnalysis = document.getElementById('securityAnalysis').checked;
+    const bestPractices = document.getElementById('bestPractices').checked;
+    
+    try {
+        const response = await fetch('/api/run-analysis', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                modules: selectedModules,
+                depth: analysisDepth,
+                performanceMetrics,
+                securityAnalysis,
+                bestPractices
+            })
+        });
+        
+        const results = await response.json();
+        
+        if (results.status === 'success') {
+            displayResults(results.data);
+        } else {
+            alert('Analysis failed: ' + results.message);
+        }
+    } catch (error) {
+        console.error('Error running analysis:', error);
+        alert('Error running analysis. Please try again.');
+    } finally {
+        runBtn.disabled = false;
+        runBtn.innerHTML = originalText;
+        feather.replace();
+    }
+}
+
+function displayResults(data) {
+    const resultsDiv = document.getElementById('analysisResults');
+    const resultsContent = document.getElementById('resultsContent');
+    
+    resultsContent.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <h4 class="text-lg font-medium text-gray-900 mb-4">Analysis Summary</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Modules Analyzed:</span>
+                        <span class="font-medium">${data.modules_analyzed.join(', ')}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Analysis Depth:</span>
+                        <span class="font-medium">${data.analysis_depth}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Timestamp:</span>
+                        <span class="font-medium">${new Date(data.timestamp).toLocaleString()}</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-lg font-medium text-gray-900 mb-4">Findings Overview</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Total Findings:</span>
+                        <span class="font-medium text-blue-600">${data.summary.total_findings}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Critical Issues:</span>
+                        <span class="font-medium text-red-600">${data.summary.critical_issues}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Warnings:</span>
+                        <span class="font-medium text-yellow-600">${data.summary.warnings}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Recommendations:</span>
+                        <span class="font-medium text-green-600">${data.summary.recommendations}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-gray-200">
+            <a href="/documentation" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                <i data-feather="file-text" class="w-4 h-4 mr-2"></i>
+                View Full Documentation
+            </a>
+        </div>
+    `;
+    
+    resultsDiv.classList.remove('hidden');
+    feather.replace();
+}
+</script>
+{% endblock %}

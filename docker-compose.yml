@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: oracle_hcm_analysis
+      POSTGRES_USER: hcm_user
+      POSTGRES_PASSWORD: hcm_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hcm_user -d oracle_hcm_analysis"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://hcm_user:hcm_password@postgres:5432/oracle_hcm_analysis
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - ./data:/app/data
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+
+  # Analysis Engine
+  analysis:
+    build:
+      context: ./analysis
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://hcm_user:hcm_password@postgres:5432/oracle_hcm_analysis
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./analysis:/app
+      - ./data:/app/data
+
+  # Documentation Generator
+  docs:
+    build:
+      context: ./docs
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=postgresql://hcm_user:hcm_password@postgres:5432/oracle_hcm_analysis
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./docs:/app
+      - ./data:/app/data
+
+volumes:
+  postgres_data:
