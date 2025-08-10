@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block title %}Documentation - Oracle HCM Analysis Platform{% endblock %}
+
+{% block content %}
+<div class="px-4 py-6 sm:px-0">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">System Documentation</h1>
+        <p class="mt-2 text-gray-600">Comprehensive documentation and analysis results for your Oracle HCM Cloud system</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div class="lg:col-span-1">
+            <div class="bg-white shadow rounded-lg">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Documentation Sections</h3>
+                </div>
+                <div class="p-6">
+                    <nav class="space-y-2">
+                        <a href="#overview" class="block px-3 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-md">System Overview</a>
+                        <a href="#modules" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">Module Analysis</a>
+                        <a href="#security" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">Security Analysis</a>
+                        <a href="#performance" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">Performance Metrics</a>
+                        <a href="#best-practices" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">Best Practices</a>
+                        <a href="#recommendations" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-md">Recommendations</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-3">
+            <div class="space-y-8">
+                <div id="overview" class="bg-white shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">System Overview</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-md font-medium text-gray-900 mb-3">System Information</h4>
+                                <dl class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <dt class="text-sm text-gray-600">System Name:</dt>
+                                        <dd class="text-sm font-medium text-gray-900">Oracle HCM Cloud</dd>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <dt class="text-sm text-gray-600">Version:</dt>
+                                        <dd class="text-sm font-medium text-gray-900">22C</dd>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <dt class="text-sm text-gray-600">Environment:</dt>
+                                        <dd class="text-sm font-medium text-gray-900">Production</dd>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <dt class="text-sm text-gray-600">Last Updated:</dt>
+                                        <dd class="text-sm font-medium text-gray-900">2024-01-15</dd>
+                                    </div>
+                                </dl>
+                            </div>
+                            <div>
+                                <h4 class="text-md font-medium text-gray-900 mb-3">System Health</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Overall Status:</span>
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                            Healthy
+                                        </span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Uptime:</span>
+                                        <span class="text-sm font-medium text-gray-900">99.8%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-gray-600">Performance:</span>
+                                        <span class="text-sm font-medium text-gray-900">Excellent</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modules" class="bg-white shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Module Analysis</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-6">
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="text-md font-medium text-gray-900">Core HR</h4>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Optimal
+                                    </span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Core human resources functionality including employee records, organizational structure, and basic HR processes.</p>
+                                <div class="grid grid-cols-3 gap-4 text-sm">
+                                    <div>
+                                        <span class="text-gray-500">Findings:</span>
+                                        <span class="font-medium text-gray-900 ml-1">12</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-500">Issues:</span>
+                                        <span class="font-medium text-red-600 ml-1">0</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-500">Score:</span>
+                                        <span class="font-medium text-green-600 ml-1">95%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="text-md font-medium text-gray-900">Recruitment</h4>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                        Good
+                                    </span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Talent acquisition and recruitment management including job postings, candidate tracking, and hiring workflows.</p>
+                                <div class="grid grid-cols-3 gap-4 text-sm">
+                                    <div>
+                                        <span class="text-gray-500">Findings:</span>
+                                        <span class="font-medium text-gray-900 ml-1">8</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-500">Issues:</span>
+                                        <span class="font-medium text-red-600 ml-1">1</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-500">Score:</span>
+                                        <span class="font-medium text-yellow-600 ml-1">87%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border border-gray-200 rounded-lg p-4">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h4 class="text-md font-medium text-gray-900">Performance Management</h4>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Optimal
+                                    </span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Employee performance tracking, goal setting, and performance review processes.</p>
+                                <div class="grid grid-cols-3 gap-4 text-sm">
+                                    <div>
+                                        <span class="text-gray-500">Findings:</span>
+                                        <span class="font-medium text-gray-900 ml-1">15</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-500">Issues:</span>
+                                        <span class="font-medium text-red-600 ml-1">0</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-500">Score:</span>
+                                        <span class="font-medium text-green-600 ml-1">92%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="security" class="bg-white shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Security Analysis</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <i data-feather="shield" class="w-5 h-5 text-green-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-green-800">User Authentication</span>
+                                </div>
+                                <span class="text-sm text-green-600">Secure</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <i data-feather="lock" class="w-5 h-5 text-green-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-green-800">Data Encryption</span>
+                                </div>
+                                <span class="text-sm text-green-600">Enabled</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                                <div class="flex items-center">
+                                    <i data-feather="alert-triangle" class="w-5 h-5 text-yellow-600 mr-3"></i>
+                                    <span class="text-sm font-medium text-yellow-800">Access Controls</span>
+                                </div>
+                                <span class="text-sm text-yellow-600">Review Required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="performance" class="bg-white shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Performance Metrics</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-blue-600">2.3s</div>
+                                <div class="text-sm text-gray-600">Average Response Time</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-green-600">99.9%</div>
+                                <div class="text-sm text-gray-600">Availability</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-purple-600">1,250</div>
+                                <div class="text-sm text-gray-600">Concurrent Users</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="best-practices" class="bg-white shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Best Practices</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i data-feather="check-circle" class="w-5 h-5 text-green-600 mr-3 mt-0.5"></i>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Regular Security Audits</p>
+                                    <p class="text-sm text-gray-600">Conduct quarterly security reviews and access control audits</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-feather="check-circle" class="w-5 h-5 text-green-600 mr-3 mt-0.5"></i>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Performance Monitoring</p>
+                                    <p class="text-sm text-gray-600">Implement continuous performance monitoring and alerting</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i data-feather="check-circle" class="w-5 h-5 text-green-600 mr-3 mt-0.5"></i>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-900">Data Backup Strategy</p>
+                                    <p class="text-sm text-gray-600">Maintain regular automated backups with recovery testing</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="recommendations" class="bg-white shadow rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-200">
+                        <h3 class="text-lg font-medium text-gray-900">Recommendations</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <div class="p-4 bg-blue-50 rounded-lg">
+                                <h4 class="text-sm font-medium text-blue-900 mb-2">High Priority</h4>
+                                <p class="text-sm text-blue-800">Review and update access control policies for recruitment module to address identified security gaps.</p>
+                            </div>
+                            <div class="p-4 bg-yellow-50 rounded-lg">
+                                <h4 class="text-sm font-medium text-yellow-900 mb-2">Medium Priority</h4>
+                                <p class="text-sm text-yellow-800">Implement additional performance monitoring for peak usage periods.</p>
+                            </div>
+                            <div class="p-4 bg-green-50 rounded-lg">
+                                <h4 class="text-sm font-medium text-green-900 mb-2">Low Priority</h4>
+                                <p class="text-sm text-green-800">Consider upgrading to the latest Oracle HCM Cloud version for enhanced features.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
