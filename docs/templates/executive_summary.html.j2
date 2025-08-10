@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Summary - {{ metadata.title }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #1f2937;
+        }
+        
+        .header h1 {
+            color: #1f2937;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            color: #6b7280;
+            font-size: 1.2em;
+        }
+        
+        .metadata {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+        }
+        
+        .metadata-item {
+            text-align: center;
+        }
+        
+        .metadata-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .metadata-label {
+            color: #6b7280;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #1f2937;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        
+        .section h3 {
+            color: #374151;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .insight-card {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .insight-card h4 {
+            color: #1f2937;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .priority-high {
+            border-left-color: #dc2626;
+        }
+        
+        .priority-medium {
+            border-left-color: #ea580c;
+        }
+        
+        .priority-low {
+            border-left-color: #059669;
+        }
+        
+        .recommendations {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .recommendations h3 {
+            color: #92400e;
+            margin-top: 0;
+        }
+        
+        .recommendation-item {
+            background-color: white;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #f59e0b;
+        }
+        
+        .recommendation-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .recommendation-title {
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+        
+        .recommendation-details {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+        
+        .recommendation-description {
+            color: #374151;
+        }
+        
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .metrics-table th,
+        .metrics-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .metrics-table th {
+            background-color: #f3f4f6;
+            font-weight: bold;
+            color: #374151;
+        }
+        
+        .metrics-table tr:hover {
+            background-color: #f9fafb;
+        }
+        
+        .complexity-high {
+            color: #dc2626;
+            font-weight: bold;
+        }
+        
+        .complexity-medium {
+            color: #ea580c;
+            font-weight: bold;
+        }
+        
+        .complexity-low {
+            color: #059669;
+            font-weight: bold;
+        }
+        
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+        }
+        
+        .action-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .timeline-item {
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .timeline-period {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-count {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3b82f6;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-description {
+            color: #6b7280;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Executive Summary</h1>
+            <div class="subtitle">{{ metadata.title }}</div>
+            <p>Comprehensive Oracle HCM System Analysis Report</p>
+            <p><strong>Generated:</strong> {{ metadata.generated_at }}</p>
+        </div>
+
+        <div class="metadata">
+            <div class="metadata-item">
+                <div class="metadata-value">{{ stats.total_pages }}</div>
+                <div class="metadata-label">Pages Analyzed</div>
+            </div>
+            <div class="metadata-item">
+                <div class="metadata-value">{{ stats.total_features }}</div>
+                <div class="metadata-label">Features Discovered</div>
+            </div>
+            <div class="metadata-item">
+                <div class="metadata-value">{{ stats.total_best_practices }}</div>
+                <div class="metadata-label">Best Practices</div>
+            </div>
+            <div class="metadata-item">
+                <div class="metadata-value">{{ metadata.analysis_config.modules_to_analyze|length }}</div>
+                <div class="metadata-label">Modules Analyzed</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Key Findings</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h4>System Complexity</h4>
+                    <p>The HCM system demonstrates <strong>{{ "high" if stats.total_features > 100 else "moderate" if stats.total_features > 50 else "low" }}</strong> complexity with {{ stats.total_features }} distinct features across {{ stats.total_pages }} pages.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>Feature Coverage</h4>
+                    <p>Comprehensive coverage across {{ metadata.analysis_config.modules_to_analyze|length }} major modules, ensuring no critical functionality is overlooked.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>Best Practice Alignment</h4>
+                    <p><strong>{{ "Strong" if stats.total_best_practices > 50 else "Moderate" if stats.total_best_practices > 25 else "Basic" }}</strong> alignment with industry best practices, providing {{ stats.total_best_practices }} actionable recommendations.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>Performance Insights</h4>
+                    <p>Average page complexity score of <strong>{{ "%.1f"|format(pages|map(attribute='complexity_score')|sum / pages|length if pages else 0) }}</strong> with {{ "%.1f"|format((features|length) / (pages|length) if pages else 0) }} features per page.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>System Overview</h2>
+            <table class="metrics-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>System Name</strong></td>
+                        <td>{{ metadata.analysis_config.system_name }}</td>
+                        <td>Primary HCM system under analysis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Version</strong></td>
+                        <td>{{ metadata.analysis_config.system_version }}</td>
+                        <td>Current system version</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analysis Coverage</strong></td>
+                        <td>{{ "%.1f"|format((stats.total_pages / 100) * 100 if stats.total_pages > 0 else 0) }}%</td>
+                        <td>Percentage of system pages analyzed</td>
+                    </tr>
+                    <tr>
+                        <td><strong>High Complexity Pages</strong></td>
+                        <td>{{ pages|selectattr('complexity_score', 'gt', 0.7)|list|length }}</td>
+                        <td>Pages requiring special attention</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Top Recommendations</h2>
+            <div class="recommendations">
+                <h3>Priority 5 - Immediate Action Required</h3>
+                {% for bp in best_practices|selectattr('priority', 'eq', 5)[:5] %}
+                <div class="recommendation-item priority-high">
+                    <div class="recommendation-title">{{ bp.title }}</div>
+                    <div class="recommendation-details">
+                        <strong>Category:</strong> {{ bp.category }} | 
+                        <strong>Business Impact:</strong> {{ bp.business_impact }} | 
+                        <strong>Effort:</strong> {{ bp.estimated_effort }}
+                    </div>
+                    <div class="recommendation-description">{{ bp.description }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Implementation Roadmap</h2>
+            <div class="action-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-period">Next 30 Days</div>
+                    <div class="timeline-count">{{ best_practices|selectattr('priority', 'eq', 5)|list|length }}</div>
+                    <div class="timeline-description">Immediate Actions</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-period">Next 90 Days</div>
+                    <div class="timeline-count">{{ best_practices|selectattr('priority', 'eq', 4)|list|length }}</div>
+                    <div class="timeline-description">Short-term Improvements</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-period">Next 6-12 Months</div>
+                    <div class="timeline-count">{{ best_practices|selectattr('priority', 'eq', 3)|list|length }}</div>
+                    <div class="timeline-description">Strategic Initiatives</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Performance Metrics</h2>
+            <table class="metrics-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Value</th>
+                        <th>Benchmark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Average Page Load Time</strong></td>
+                        <td>{{ "%.2f"|format(pages|map(attribute='load_time')|sum / pages|length if pages else 0) }} seconds</td>
+                        <td>&lt; 3.0 seconds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complexity Distribution</strong></td>
+                        <td>{{ "%.1f"|format(pages|map(attribute='complexity_score')|sum / pages|length if pages else 0) }}</td>
+                        <td>0.0 - 1.0 scale</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feature Density</strong></td>
+                        <td>{{ "%.1f"|format((features|length) / (pages|length) if pages else 0) }} features/page</td>
+                        <td>2.0 - 5.0 optimal</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Workflow Integration</strong></td>
+                        <td>{{ pages|selectattr('workflows', 'length', 'gt', 0)|list|length }} pages</td>
+                        <td>High integration preferred</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Business Impact Analysis</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <h4>High Business Value Features</h4>
+                    <p><strong>{{ features|selectattr('business_value', 'eq', 'high')|list|length }}</strong> features identified as high business value, representing significant ROI opportunities.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>Complexity Management</h4>
+                    <p><strong>{{ pages|selectattr('complexity_score', 'gt', 0.7)|list|length }}</strong> high-complexity pages identified for potential simplification or training focus.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>Feature Utilization</h4>
+                    <p>Average of <strong>{{ "%.1f"|format((features|length) / (pages|length) if pages else 0) }}</strong> features per page, indicating {{ "high" if (features|length) / (pages|length) > 4 else "moderate" if (features|length) / (pages|length) > 2 else "low" }} feature density.</p>
+                </div>
+                <div class="insight-card">
+                    <h4>Best Practice Coverage</h4>
+                    <p><strong>{{ "%.1f"|format((stats.total_best_practices / 100) * 100 if stats.total_best_practices > 0 else 0) }}%</strong> of common HCM best practices are addressed in current recommendations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>Oracle HCM Analysis Platform</strong> - Executive Summary</p>
+            <p>Generated on {{ metadata.generated_at }} | Platform Version: {{ metadata.analysis_config.platform_version if metadata.analysis_config.platform_version else '1.0.0' }}</p>
+            <p>This summary provides high-level insights. For detailed analysis, refer to the complete documentation.</p>
+        </div>
+    </div>
+</body>
+</html>

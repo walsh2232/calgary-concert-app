@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - Oracle HCM Analysis Platform</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <meta name="description" content="Detailed analysis of {{ page.title }} page in Oracle HCM system">
+</head>
+<body>
+    <div class="header">
+        <h1>{{ page.title }}</h1>
+        <p class="subtitle">Page Analysis Report</p>
+        <div class="breadcrumbs">
+            <a href="index.html">Home</a> &gt; 
+            <a href="#pages">Pages</a> &gt; 
+            <span>{{ page.title }}</span>
+        </div>
+    </div>
+
+    <div class="nav">
+        <nav class="main-nav">
+            <a href="index.html">← Back to Overview</a>
+            <a href="#overview">Page Overview</a>
+            <a href="#features">Features</a>
+            <a href="#navigation">Navigation</a>
+            <a href="#analysis">Analysis</a>
+        </nav>
+    </div>
+
+    <div class="content">
+        <section id="overview">
+            <h2>Page Overview</h2>
+            <div class="page-overview">
+                <div class="page-info">
+                    <h3>Basic Information</h3>
+                    <table class="info-table">
+                        <tr>
+                            <td><strong>Page Title:</strong></td>
+                            <td>{{ page.title }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>URL:</strong></td>
+                            <td><code>{{ page.url }}</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Page Type:</strong></td>
+                            <td><span class="badge badge-{{ page.page_type.value }}">{{ page.page_type.value }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Complexity Score:</strong></td>
+                            <td><span class="complexity-badge complexity-{{ page.complexity_score|round|int }}">{{ "%.2f"|format(page.complexity_score) }}</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Last Updated:</strong></td>
+                            <td>{{ page.last_updated }}</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="page-description">
+                    <h3>Description</h3>
+                    <p>{{ page.description }}</p>
+                </div>
+
+                {% if page.keywords %}
+                <div class="page-keywords">
+                    <h3>Keywords</h3>
+                    <div class="keyword-tags">
+                        {% for keyword in page.keywords %}
+                        <span class="keyword-tag">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section id="features">
+            <h2>Page Features</h2>
+            
+            {% if page.forms %}
+            <div class="feature-section">
+                <h3>Forms ({{ page.forms|length }})</h3>
+                <div class="forms-grid">
+                    {% for form in page.forms %}
+                    <div class="form-card">
+                        <h4>{{ form.name }}</h4>
+                        <p>{{ form.description }}</p>
+                        <div class="form-meta">
+                            <span class="form-type">{{ form.form_type.value }}</span>
+                            <span class="form-complexity">{{ form.complexity.value }}</span>
+                        </div>
+                        <div class="form-fields">
+                            <strong>Fields:</strong> {{ form.fields|length }}
+                        </div>
+                        {% if form.validation_rules %}
+                        <div class="validation-rules">
+                            <strong>Validation Rules:</strong> {{ form.validation_rules|length }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if page.reports %}
+            <div class="feature-section">
+                <h3>Reports ({{ page.reports|length }})</h3>
+                <div class="reports-grid">
+                    {% for report in page.reports %}
+                    <div class="report-card">
+                        <h4>{{ report.name }}</h4>
+                        <p>{{ report.description }}</p>
+                        <div class="report-meta">
+                            <span class="report-type">{{ report.report_type.value }}</span>
+                            <span class="report-frequency">{{ report.frequency.value }}</span>
+                        </div>
+                        <div class="report-details">
+                            <span class="data-sources">Data Sources: {{ report.data_sources|length }}</span>
+                            <span class="parameters">Parameters: {{ report.parameters|length }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if page.workflows %}
+            <div class="feature-section">
+                <h3>Workflows ({{ page.workflows|length }})</h3>
+                <div class="workflows-grid">
+                    {% for workflow in page.workflows %}
+                    <div class="workflow-card">
+                        <h4>{{ workflow.name }}</h4>
+                        <p>{{ workflow.description }}</p>
+                        <div class="workflow-meta">
+                            <span class="workflow-type">{{ workflow.workflow_type.value }}</span>
+                            <span class="workflow-status">{{ workflow.status.value }}</span>
+                        </div>
+                        <div class="workflow-details">
+                            <span class="steps">Steps: {{ workflow.steps|length }}</span>
+                            <span class="approvers">Approvers: {{ workflow.approvers|length }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section id="navigation">
+            <h2>Navigation & Structure</h2>
+            
+            {% if navigation_path %}
+            <div class="navigation-section">
+                <h3>Navigation Path</h3>
+                <div class="nav-path">
+                    {% for nav_item in navigation_path %}
+                    <span class="nav-item">{{ nav_item }}</span>
+                    {% if not loop.last %}<span class="nav-separator">→</span>{% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if breadcrumbs %}
+            <div class="breadcrumbs-section">
+                <h3>Breadcrumb Navigation</h3>
+                <div class="breadcrumb-trail">
+                    {% for breadcrumb in breadcrumbs %}
+                    <span class="breadcrumb-item">{{ breadcrumb }}</span>
+                    {% if not loop.last %}<span class="breadcrumb-separator">/</span>{% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if page.parent_pages %}
+            <div class="parent-pages">
+                <h3>Parent Pages</h3>
+                <ul>
+                    {% for parent in page.parent_pages %}
+                    <li><a href="page_{{ parent.id }}.html">{{ parent.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if page.child_pages %}
+            <div class="child-pages">
+                <h3>Child Pages</h3>
+                <ul>
+                    {% for child in page.child_pages %}
+                    <li><a href="page_{{ child.id }}.html">{{ child.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </section>
+
+        <section id="analysis">
+            <h2>Analysis Results</h2>
+            
+            <div class="analysis-metrics">
+                <h3>Performance Metrics</h3>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <h4>Load Time</h4>
+                        <p class="metric-value">{{ "%.2f"|format(page.load_time) }}s</p>
+                        <p class="metric-label">Average page load time</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Complexity Score</h4>
+                        <p class="metric-value">{{ "%.2f"|format(page.complexity_score) }}</p>
+                        <p class="metric-label">Page complexity (0-1 scale)</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Feature Count</h4>
+                        <p class="metric-value">{{ page.forms|length + page.reports|length + page.workflows|length }}</p>
+                        <p class="metric-label">Total features on page</p>
+                    </div>
+                </div>
+            </div>
+
+            {% if page.analysis_notes %}
+            <div class="analysis-notes">
+                <h3>Analysis Notes</h3>
+                <div class="notes-content">
+                    {{ page.analysis_notes|safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if page.recommendations %}
+            <div class="page-recommendations">
+                <h3>Recommendations</h3>
+                <ul class="recommendations-list">
+                    {% for rec in page.recommendations %}
+                    <li>{{ rec }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </section>
+
+        {% if related_features %}
+        <section id="related">
+            <h2>Related Features</h2>
+            <p>Features that are closely related to this page:</p>
+            <div class="related-features-grid">
+                {% for feature in related_features %}
+                <div class="related-feature-card">
+                    <h4><a href="feature_{{ feature.id }}.html">{{ feature.name }}</a></h4>
+                    <p>{{ feature.description[:100] }}{% if feature.description|length > 100 %}...{% endif %}</p>
+                    <span class="feature-type">{{ feature.feature_type.value }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <p>&copy; {{ metadata.generated_at[:4] }} Oracle HCM Analysis Platform</p>
+        <p><a href="index.html">← Back to Overview</a></p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ metadata.title }} - Oracle HCM Analysis Platform</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <meta name="description" content="Comprehensive analysis of Oracle HCM system with detailed documentation, features, and best practices">
+    <meta name="keywords" content="Oracle, HCM, Human Capital Management, Analysis, Documentation, Best Practices">
+</head>
+<body>
+    <div class="header">
+        <h1>{{ metadata.title }}</h1>
+        <p class="subtitle">Comprehensive Oracle HCM System Analysis</p>
+        <div class="metadata">
+            <span><strong>Version:</strong> {{ metadata.version }}</span>
+            <span><strong>Generated:</strong> {{ metadata.generated_at[:10] }}</span>
+            <span><strong>System:</strong> {{ metadata.analysis_config.system_name }}</span>
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="search-container">
+            <input type="text" id="search-box" class="search-box" placeholder="Search documentation...">
+        </div>
+        <nav class="main-nav">
+            <a href="#overview">Overview</a>
+            <a href="#pages">Pages</a>
+            <a href="#features">Features</a>
+            <a href="#best-practices">Best Practices</a>
+            <a href="#analysis">Analysis Report</a>
+        </nav>
+    </div>
+
+    <div class="content">
+        <section id="overview">
+            <h2>System Overview</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>{{ stats.total_pages }}</h3>
+                    <p>Pages Analyzed</p>
+                </div>
+                <div class="stat-card">
+                    <h3>{{ stats.total_features }}</h3>
+                    <p>Features Discovered</p>
+                </div>
+                <div class="stat-card">
+                    <h3>{{ stats.total_best_practices }}</h3>
+                    <p>Best Practices</p>
+                </div>
+                <div class="stat-card">
+                    <h3>{{ stats.modules_analyzed|length }}</h3>
+                    <p>Modules Analyzed</p>
+                </div>
+            </div>
+
+            <div class="modules-section">
+                <h3>Modules Analyzed</h3>
+                <div class="module-tags">
+                    {% for module in stats.modules_analyzed %}
+                    <span class="module-tag">{{ module }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <section id="pages">
+            <h2>HCM Pages Analysis</h2>
+            <p>Detailed analysis of {{ stats.total_pages }} pages within the Oracle HCM system.</p>
+            
+            <div class="pages-grid">
+                {% for page in pages %}
+                <div class="page-card">
+                    <h3><a href="page_{{ page.id }}.html">{{ page.title }}</a></h3>
+                    <p class="page-description">{{ page.description[:100] }}{% if page.description|length > 100 %}...{% endif %}</p>
+                    <div class="page-meta">
+                        <span class="page-type">{{ page.page_type.value }}</span>
+                        <span class="complexity-score">Complexity: {{ "%.1f"|format(page.complexity_score) }}</span>
+                    </div>
+                    <div class="page-features">
+                        <span class="feature-count">{{ page.forms|length }} Forms</span>
+                        <span class="feature-count">{{ page.reports|length }} Reports</span>
+                        <span class="feature-count">{{ page.workflows|length }} Workflows</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="features">
+            <h2>System Features</h2>
+            <p>Comprehensive catalog of {{ stats.total_features }} features discovered during analysis.</p>
+            
+            <div class="features-grid">
+                {% for feature in features %}
+                <div class="feature-card">
+                    <h3><a href="feature_{{ feature.id }}.html">{{ feature.name }}</a></h3>
+                    <p class="feature-description">{{ feature.description[:150] }}{% if feature.description|length > 150 %}...{% endif %}</p>
+                    <div class="feature-meta">
+                        <span class="feature-type">{{ feature.feature_type.value }}</span>
+                        <span class="complexity-level">{{ feature.complexity.value }}</span>
+                    </div>
+                    <div class="feature-details">
+                        <span class="business-value">Value: {{ feature.business_value }}</span>
+                        <span class="implementation-effort">Effort: {{ feature.implementation_effort }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="best-practices">
+            <h2>Best Practices & Recommendations</h2>
+            <p>{{ stats.total_best_practices }} best practices identified for optimal HCM system usage.</p>
+            
+            <div class="best-practices-grid">
+                {% for bp in best_practices %}
+                <div class="best-practice-card priority-{{ bp.priority }}">
+                    <h3><a href="best_practice_{{ bp.id }}.html">{{ bp.title }}</a></h3>
+                    <p class="bp-description">{{ bp.description[:200] }}{% if bp.description|length > 200 %}...{% endif %}</p>
+                    <div class="bp-meta">
+                        <span class="category">{{ bp.category }}</span>
+                        <span class="priority priority-{{ bp.priority }}">Priority {{ bp.priority }}</span>
+                    </div>
+                    <div class="bp-impact">
+                        <span class="business-impact">Impact: {{ bp.business_impact }}</span>
+                        <span class="effort">Effort: {{ bp.estimated_effort }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        {% if analysis_session %}
+        <section id="analysis">
+            <h2>Analysis Report</h2>
+            <div class="analysis-summary">
+                <h3>Analysis Session: {{ analysis_session.session_name }}</h3>
+                <p><strong>Started:</strong> {{ analysis_session.start_time }}</p>
+                <p><strong>Duration:</strong> {{ analysis_session.duration }}</p>
+                <p><strong>Status:</strong> <span class="status-{{ analysis_session.status.value }}">{{ analysis_session.status.value }}</span></p>
+                
+                {% if analysis_session.summary %}
+                <div class="analysis-summary-content">
+                    <h4>Summary</h4>
+                    <p>{{ analysis_session.summary }}</p>
+                </div>
+                {% endif %}
+                
+                {% if analysis_session.recommendations %}
+                <div class="analysis-recommendations">
+                    <h4>Key Recommendations</h4>
+                    <ul>
+                        {% for rec in analysis_session.recommendations %}
+                        <li>{{ rec }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <p>&copy; {{ metadata.generated_at[:4] }} Oracle HCM Analysis Platform. Generated on {{ metadata.generated_at }}.</p>
+        <p>This documentation was automatically generated from system analysis data.</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

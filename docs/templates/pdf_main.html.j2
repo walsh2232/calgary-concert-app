@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ metadata.title }} - PDF Report</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+            @top-center {
+                content: "Oracle HCM Analysis Report";
+                font-size: 10pt;
+                color: #666;
+            }
+            @bottom-center {
+                content: "Page " counter(page) " of " counter(pages);
+                font-size: 10pt;
+                color: #666;
+            }
+        }
+        
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            font-size: 11pt;
+        }
+        
+        h1 {
+            font-size: 24pt;
+            color: #1f2937;
+            text-align: center;
+            margin-bottom: 20pt;
+            border-bottom: 3pt solid #1f2937;
+            padding-bottom: 10pt;
+        }
+        
+        h2 {
+            font-size: 18pt;
+            color: #374151;
+            margin-top: 30pt;
+            margin-bottom: 15pt;
+            border-bottom: 1pt solid #d1d5db;
+            padding-bottom: 5pt;
+        }
+        
+        h3 {
+            font-size: 14pt;
+            color: #4b5563;
+            margin-top: 20pt;
+            margin-bottom: 10pt;
+        }
+        
+        h4 {
+            font-size: 12pt;
+            color: #6b7280;
+            margin-top: 15pt;
+            margin-bottom: 8pt;
+        }
+        
+        .executive-summary {
+            background-color: #f9fafb;
+            border: 1pt solid #d1d5db;
+            padding: 20pt;
+            margin: 20pt 0;
+            border-radius: 5pt;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15pt;
+            margin: 20pt 0;
+        }
+        
+        .stat-card {
+            background-color: #ffffff;
+            border: 1pt solid #e5e7eb;
+            padding: 15pt;
+            border-radius: 5pt;
+            text-align: center;
+        }
+        
+        .stat-card h3 {
+            font-size: 24pt;
+            color: #1f2937;
+            margin: 0 0 5pt 0;
+        }
+        
+        .stat-card p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 10pt;
+        }
+        
+        .priority-high {
+            color: #dc2626;
+            font-weight: bold;
+        }
+        
+        .priority-medium {
+            color: #ea580c;
+            font-weight: bold;
+        }
+        
+        .priority-low {
+            color: #059669;
+            font-weight: bold;
+        }
+        
+        .complexity-high {
+            color: #dc2626;
+        }
+        
+        .complexity-medium {
+            color: #ea580c;
+        }
+        
+        .complexity-low {
+            color: #059669;
+        }
+        
+        .page-break {
+            page-break-before: always;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15pt 0;
+        }
+        
+        .table th,
+        .table td {
+            border: 1pt solid #d1d5db;
+            padding: 8pt;
+            text-align: left;
+            font-size: 10pt;
+        }
+        
+        .table th {
+            background-color: #f3f4f6;
+            font-weight: bold;
+        }
+        
+        .recommendation {
+            background-color: #fef3c7;
+            border-left: 4pt solid #f59e0b;
+            padding: 15pt;
+            margin: 15pt 0;
+            border-radius: 3pt;
+        }
+        
+        .recommendation h4 {
+            margin-top: 0;
+            color: #92400e;
+        }
+        
+        .footer {
+            margin-top: 40pt;
+            padding-top: 20pt;
+            border-top: 1pt solid #d1d5db;
+            text-align: center;
+            font-size: 9pt;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ metadata.title }}</h1>
+    
+    <div class="executive-summary">
+        <h2>Executive Summary</h2>
+        <p>This comprehensive analysis of the Oracle HCM system provides detailed insights into {{ stats.total_pages }} pages, {{ stats.total_features }} features, and {{ stats.total_best_practices }} best practices. The analysis was conducted using advanced automated tools to provide PhD-level detail and actionable recommendations for system optimization.</p>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>{{ stats.total_pages }}</h3>
+                <p>Pages Analyzed</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ stats.total_features }}</h3>
+                <p>Features Discovered</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ stats.total_best_practices }}</h3>
+                <p>Best Practices</p>
+            </div>
+            <div class="stat-card">
+                <h3>{{ metadata.analysis_config.modules_to_analyze|length }}</h3>
+                <p>Modules Analyzed</p>
+            </div>
+        </div>
+    </div>
+
+    <h2>System Overview</h2>
+    <p><strong>System Name:</strong> {{ metadata.analysis_config.system_name }}</p>
+    <p><strong>Version:</strong> {{ metadata.analysis_config.system_version }}</p>
+    <p><strong>Analysis Date:</strong> {{ metadata.generated_at[:10] }}</p>
+    <p><strong>Modules Analyzed:</strong> {{ metadata.analysis_config.modules_to_analyze|join(', ') }}</p>
+
+    <div class="page-break"></div>
+    
+    <h2>Pages Analysis</h2>
+    <p>The analysis covers {{ stats.total_pages }} pages within the Oracle HCM system, providing detailed insights into page complexity, features, and performance metrics.</p>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Page Title</th>
+                <th>Type</th>
+                <th>Complexity</th>
+                <th>Forms</th>
+                <th>Reports</th>
+                <th>Workflows</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for page in pages %}
+            <tr>
+                <td>{{ page.title }}</td>
+                <td>{{ page.page_type.value }}</td>
+                <td class="complexity-{{ 'high' if page.complexity_score > 0.7 else 'medium' if page.complexity_score > 0.4 else 'low' }}">
+                    {{ "%.2f"|format(page.complexity_score) }}
+                </td>
+                <td>{{ page.forms|length }}</td>
+                <td>{{ page.reports|length }}</td>
+                <td>{{ page.workflows|length }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Key Findings</h3>
+    <ul>
+        <li><strong>High Complexity Pages:</strong> {{ pages|selectattr('complexity_score', 'gt', 0.7)|list|length }} pages require special attention</li>
+        <li><strong>Feature-Rich Pages:</strong> {{ pages|selectattr('forms', 'length', 'gt', 5)|list|length }} pages have extensive form functionality</li>
+        <li><strong>Workflow Integration:</strong> {{ pages|selectattr('workflows', 'length', 'gt', 0)|list|length }} pages include workflow processes</li>
+    </ul>
+
+    <div class="page-break"></div>
+    
+    <h2>Features Catalog</h2>
+    <p>The analysis identified {{ stats.total_features }} distinct features across the HCM system, categorized by type, complexity, and business value.</p>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Feature Name</th>
+                <th>Type</th>
+                <th>Complexity</th>
+                <th>Business Value</th>
+                <th>Implementation Effort</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feature in features %}
+            <tr>
+                <td>{{ feature.name }}</td>
+                <td>{{ feature.feature_type.value }}</td>
+                <td>{{ feature.complexity.value }}</td>
+                <td>{{ feature.business_value }}</td>
+                <td>{{ feature.implementation_effort }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Feature Distribution</h3>
+    <ul>
+        <li><strong>Basic Features:</strong> {{ features|selectattr('complexity.value', 'eq', 'basic')|list|length }}</li>
+        <li><strong>Advanced Features:</strong> {{ features|selectattr('complexity.value', 'in', ['advanced', 'expert'])|list|length }}</li>
+        <li><strong>High Business Value:</strong> {{ features|selectattr('business_value', 'eq', 'high')|list|length }}</li>
+    </ul>
+
+    <div class="page-break"></div>
+    
+    <h2>Best Practices & Recommendations</h2>
+    <p>{{ stats.total_best_practices }} best practices were identified, prioritized by business impact and implementation effort.</p>
+    
+    <h3>Priority Distribution</h3>
+    <ul>
+        <li><strong>High Priority (5):</strong> {{ best_practices|selectattr('priority', 'eq', 5)|list|length }} recommendations</li>
+        <li><strong>Medium Priority (3-4):</strong> {{ best_practices|selectattr('priority', 'ge', 3)|selectattr('priority', 'lt', 5)|list|length }} recommendations</li>
+        <li><strong>Low Priority (1-2):</strong> {{ best_practices|selectattr('priority', 'lt', 3)|list|length }} recommendations</li>
+    </ul>
+
+    <h3>Top Recommendations</h3>
+    {% for bp in best_practices|sort(attribute='priority', reverse=true)[:10] %}
+    <div class="recommendation">
+        <h4>{{ bp.title }} (Priority: {{ bp.priority }})</h4>
+        <p><strong>Category:</strong> {{ bp.category }}</p>
+        <p><strong>Business Impact:</strong> {{ bp.business_impact }}</p>
+        <p><strong>Implementation Effort:</strong> {{ bp.estimated_effort }}</p>
+        <p>{{ bp.description }}</p>
+    </div>
+    {% endfor %}
+
+    <div class="page-break"></div>
+    
+    <h2>Analysis Summary</h2>
+    
+    <h3>Key Insights</h3>
+    <ul>
+        <li><strong>System Complexity:</strong> The HCM system demonstrates {{ "high" if stats.total_features > 100 else "moderate" if stats.total_features > 50 else "low" }} complexity</li>
+        <li><strong>Feature Coverage:</strong> Comprehensive coverage across {{ metadata.analysis_config.modules_to_analyze|length }} major modules</li>
+        <li><strong>Best Practice Alignment:</strong> {{ "Strong" if stats.total_best_practices > 50 else "Moderate" if stats.total_best_practices > 25 else "Basic" }} alignment with industry best practices</li>
+    </ul>
+
+    <h3>Performance Metrics</h3>
+    <ul>
+        <li><strong>Average Page Load Time:</strong> {{ "%.2f"|format(pages|map(attribute='load_time')|sum / pages|length if pages else 0) }} seconds</li>
+        <li><strong>Complexity Distribution:</strong> {{ "%.1f"|format(pages|map(attribute='complexity_score')|sum / pages|length if pages else 0) }} average complexity score</li>
+        <li><strong>Feature Density:</strong> {{ "%.1f"|format((features|length) / (pages|length) if pages else 0) }} features per page</li>
+    </ul>
+
+    <h2>Implementation Roadmap</h2>
+    
+    <h3>Immediate Actions (Next 30 Days)</h3>
+    <ul>
+        {% for bp in best_practices|selectattr('priority', 'eq', 5)[:3] %}
+        <li><strong>{{ bp.title }}:</strong> {{ bp.description[:100] }}...</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Short-term Improvements (Next 90 Days)</h3>
+    <ul>
+        {% for bp in best_practices|selectattr('priority', 'eq', 4)[:3] %}
+        <li><strong>{{ bp.title }}:</strong> {{ bp.description[:100] }}...</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Long-term Strategic Initiatives (Next 6-12 Months)</h3>
+    <ul>
+        {% for bp in best_practices|selectattr('priority', 'eq', 3)[:3] %}
+        <li><strong>{{ bp.title }}:</strong> {{ bp.description[:100] }}...</li>
+        {% endfor %}
+    </ul>
+
+    <div class="footer">
+        <p>Oracle HCM Analysis Platform - Generated on {{ metadata.generated_at }}</p>
+        <p>This report was automatically generated using advanced analysis tools</p>
+        <p>For questions or additional analysis, please contact the analysis team</p>
+    </div>
+</body>
+</html>

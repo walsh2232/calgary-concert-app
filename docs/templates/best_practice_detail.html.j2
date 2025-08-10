@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ best_practice.title }} - Oracle HCM Analysis Platform</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <meta name="description" content="Best practice recommendation: {{ best_practice.title }} for Oracle HCM system">
+</head>
+<body>
+    <div class="header">
+        <h1>{{ best_practice.title }}</h1>
+        <p class="subtitle">Best Practice Recommendation</p>
+        <div class="breadcrumbs">
+            <a href="index.html">Home</a> &gt; 
+            <a href="#best-practices">Best Practices</a> &gt; 
+            <span>{{ best_practice.title }}</span>
+        </div>
+    </div>
+
+    <div class="nav">
+        <nav class="main-nav">
+            <a href="index.html">← Back to Overview</a>
+            <a href="#overview">Overview</a>
+            <a href="#implementation">Implementation</a>
+            <a href="#benefits">Benefits & Impact</a>
+            <a href="#examples">Examples</a>
+        </nav>
+    </div>
+
+    <div class="content">
+        <section id="overview">
+            <h2>Best Practice Overview</h2>
+            <div class="bp-overview">
+                <div class="bp-header">
+                    <div class="bp-priority priority-{{ best_practice.priority }}">
+                        <span class="priority-label">Priority {{ best_practice.priority }}</span>
+                    </div>
+                    <div class="bp-category">
+                        <span class="category-badge">{{ best_practice.category }}</span>
+                    </div>
+                </div>
+
+                <div class="bp-description">
+                    <h3>Description</h3>
+                    <p>{{ best_practice.description }}</p>
+                </div>
+
+                <div class="bp-metrics">
+                    <div class="metric-row">
+                        <div class="metric-item">
+                            <strong>Business Impact:</strong>
+                            <span class="impact-badge impact-{{ best_practice.business_impact }}">{{ best_practice.business_impact }}</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>Implementation Effort:</strong>
+                            <span class="effort-badge effort-{{ best_practice.estimated_effort }}">{{ best_practice.estimated_effort }}</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>ROI Timeline:</strong>
+                            <span class="roi-badge">{{ best_practice.roi_timeline }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {% if best_practice.keywords %}
+                <div class="bp-keywords">
+                    <h3>Keywords</h3>
+                    <div class="keyword-tags">
+                        {% for keyword in best_practice.keywords %}
+                        <span class="keyword-tag">{{ keyword }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+
+        <section id="implementation">
+            <h2>Implementation Guide</h2>
+            
+            {% if best_practice.implementation_steps %}
+            <div class="implementation-steps">
+                <h3>Step-by-Step Implementation</h3>
+                <ol class="steps-list">
+                    {% for step in best_practice.implementation_steps %}
+                    <li>
+                        <h4>{{ step.title }}</h4>
+                        <p>{{ step.description }}</p>
+                        {% if step.details %}
+                        <div class="step-details">
+                            {{ step.details|safe }}
+                        </div>
+                        {% endif %}
+                        {% if step.estimated_time %}
+                        <span class="step-time">Estimated time: {{ step.estimated_time }}</span>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endif %}
+
+            {% if best_practice.prerequisites %}
+            <div class="prerequisites">
+                <h3>Prerequisites</h3>
+                <ul class="prereq-list">
+                    {% for prereq in best_practice.prerequisites %}
+                    <li>{{ prereq }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if best_practice.required_resources %}
+            <div class="required-resources">
+                <h3>Required Resources</h3>
+                <div class="resources-grid">
+                    {% for resource in best_practice.required_resources %}
+                    <div class="resource-card">
+                        <h4>{{ resource.type }}</h4>
+                        <p>{{ resource.description }}</p>
+                        {% if resource.quantity %}
+                        <span class="resource-quantity">Quantity: {{ resource.quantity }}</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if best_practice.configuration_changes %}
+            <div class="configuration-changes">
+                <h3>Configuration Changes</h3>
+                <div class="config-changes-list">
+                    {% for change in best_practice.configuration_changes %}
+                    <div class="config-change">
+                        <h4>{{ change.name }}</h4>
+                        <p>{{ change.description }}</p>
+                        {% if change.current_value %}
+                        <div class="change-details">
+                            <strong>Current Value:</strong> <code>{{ change.current_value }}</code>
+                        </div>
+                        {% endif %}
+                        {% if change.recommended_value %}
+                        <div class="change-details">
+                            <strong>Recommended Value:</strong> <code>{{ change.recommended_value }}</code>
+                        </div>
+                        {% endif %}
+                        {% if change.impact %}
+                        <div class="change-impact">
+                            <strong>Impact:</strong> {{ change.impact }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section id="benefits">
+            <h2>Benefits & Business Impact</h2>
+            
+            {% if best_practice.benefits %}
+            <div class="benefits-section">
+                <h3>Key Benefits</h3>
+                <div class="benefits-grid">
+                    {% for benefit in best_practice.benefits %}
+                    <div class="benefit-card">
+                        <h4>{{ benefit.title }}</h4>
+                        <p>{{ benefit.description }}</p>
+                        {% if benefit.quantifiable %}
+                        <div class="benefit-metrics">
+                            <strong>Quantifiable Impact:</strong>
+                            <p>{{ benefit.quantifiable }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if best_practice.business_impact_details %}
+            <div class="business-impact">
+                <h3>Business Impact Analysis</h3>
+                <div class="impact-content">
+                    {{ best_practice.business_impact_details|safe }}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if best_practice.risk_mitigation %}
+            <div class="risk-mitigation">
+                <h3>Risk Mitigation</h3>
+                <div class="risks-grid">
+                    {% for risk in best_practice.risk_mitigation %}
+                    <div class="risk-card">
+                        <h4>{{ risk.risk_type }}</h4>
+                        <p class="risk-description">{{ risk.description }}</p>
+                        <div class="risk-mitigation">
+                            <strong>Mitigation Strategy:</strong>
+                            <p>{{ risk.mitigation_strategy }}</p>
+                        </div>
+                        {% if risk.likelihood %}
+                        <span class="risk-likelihood">Likelihood: {{ risk.likelihood }}</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <section id="examples">
+            <h2>Examples & Use Cases</h2>
+            
+            {% if best_practice.examples %}
+            <div class="examples-section">
+                <h3>Implementation Examples</h3>
+                <div class="examples-grid">
+                    {% for example in best_practice.examples %}
+                    <div class="example-card">
+                        <h4>{{ example.title }}</h4>
+                        <p class="example-description">{{ example.description }}</p>
+                        {% if example.scenario %}
+                        <div class="example-scenario">
+                            <strong>Scenario:</strong>
+                            <p>{{ example.scenario }}</p>
+                        </div>
+                        {% endif %}
+                        {% if example.code %}
+                        <div class="example-code">
+                            <strong>Code Example:</strong>
+                            <pre class="code-block"><code>{{ example.code }}</code></pre>
+                        </div>
+                        {% endif %}
+                        {% if example.results %}
+                        <div class="example-results">
+                            <strong>Expected Results:</strong>
+                            <p>{{ example.results }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if best_practice.use_cases %}
+            <div class="use-cases">
+                <h3>Common Use Cases</h3>
+                <div class="use-cases-grid">
+                    {% for use_case in best_practice.use_cases %}
+                    <div class="use-case-card">
+                        <h4>{{ use_case.title }}</h4>
+                        <p>{{ use_case.description }}</p>
+                        {% if use_case.industries %}
+                        <div class="use-case-industries">
+                            <strong>Applicable Industries:</strong>
+                            <div class="industry-tags">
+                                {% for industry in use_case.industries %}
+                                <span class="industry-tag">{{ industry }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {% if best_practice.success_stories %}
+            <div class="success-stories">
+                <h3>Success Stories</h3>
+                <div class="stories-grid">
+                    {% for story in best_practice.success_stories %}
+                    <div class="story-card">
+                        <h4>{{ story.title }}</h4>
+                        <p class="story-description">{{ story.description }}</p>
+                        <div class="story-metrics">
+                            {% if story.improvement %}
+                            <span class="improvement">Improvement: {{ story.improvement }}</span>
+                            {% endif %}
+                            {% if story.timeframe %}
+                            <span class="timeframe">Timeframe: {{ story.timeframe }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        {% if best_practice.applicable_features %}
+        <section id="applicable">
+            <h2>Applicable Features</h2>
+            <p>This best practice applies to the following HCM features:</p>
+            <div class="applicable-features-grid">
+                {% for feature_id in best_practice.applicable_features %}
+                <!-- This would need to be populated with actual feature data -->
+                <div class="applicable-feature-card">
+                    <h4>Feature ID: {{ feature_id }}</h4>
+                    <p>Feature details would be populated here</p>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if best_practice.related_best_practices %}
+        <section id="related">
+            <h2>Related Best Practices</h2>
+            <p>Best practices that complement or relate to this recommendation:</p>
+            <div class="related-bp-grid">
+                {% for related in best_practice.related_best_practices %}
+                <div class="related-bp-card">
+                    <h4>{{ related.title }}</h4>
+                    <p>{{ related.description[:150] }}{% if related.description|length > 150 %}...{% endif %}</p>
+                    <div class="related-bp-meta">
+                        <span class="category">{{ related.category }}</span>
+                        <span class="priority priority-{{ related.priority }}">Priority {{ related.priority }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+    </div>
+
+    <footer class="footer">
+        <p>&copy; {{ metadata.generated_at[:4] }} Oracle HCM Analysis Platform</p>
+        <p><a href="index.html">← Back to Overview</a></p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

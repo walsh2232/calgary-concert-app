@@ -1,0 +1,163 @@
+# {{ metadata.title }}
+
+**Generated:** {{ metadata.generated_at }}  
+**System Version:** {{ metadata.version }}  
+**Analysis Platform:** Oracle HCM Analysis Platform v1.0.0
+
+## Overview
+
+This comprehensive analysis report provides detailed insights into the Oracle HCM system, covering {{ stats.total_pages }} pages, {{ stats.total_features }} features, and {{ stats.total_best_practices }} best practices. The analysis was conducted using advanced automated tools to provide PhD-level detail and actionable recommendations.
+
+## Table of Contents
+
+- [System Overview](#system-overview)
+- [Pages Analysis](#pages-analysis)
+- [Features Catalog](#features-catalog)
+- [Best Practices](#best-practices)
+- [Analysis Summary](#analysis-summary)
+- [Recommendations](#recommendations)
+
+## System Overview
+
+### Analysis Statistics
+- **Total Pages Analyzed:** {{ stats.total_pages }}
+- **Total Features Discovered:** {{ stats.total_features }}
+- **Total Best Practices:** {{ stats.total_best_practices }}
+- **Analysis Coverage:** Comprehensive across all major HCM modules
+
+### System Information
+- **System Name:** {{ metadata.analysis_config.system_name }}
+- **Version:** {{ metadata.analysis_config.system_version }}
+- **Modules Analyzed:** {{ metadata.analysis_config.modules_to_analyze|join(', ') }}
+
+## Pages Analysis
+
+The analysis covers {{ stats.total_pages }} pages within the Oracle HCM system, providing detailed insights into:
+
+### Page Types Distribution
+{% for page in pages %}
+- **{{ page.title }}** - {{ page.page_type.value }} (Complexity: {{ "%.2f"|format(page.complexity_score) }})
+  - Forms: {{ page.forms|length }}
+  - Reports: {{ page.reports|length }}
+  - Workflows: {{ page.workflows|length }}
+{% endfor %}
+
+### Key Findings
+- **High Complexity Pages:** {{ pages|selectattr('complexity_score', 'gt', 0.7)|list|length }} pages require special attention
+- **Feature-Rich Pages:** {{ pages|selectattr('forms', 'length', 'gt', 5)|list|length }} pages have extensive form functionality
+- **Workflow Integration:** {{ pages|selectattr('workflows', 'length', 'gt', 0)|list|length }} pages include workflow processes
+
+## Features Catalog
+
+### Feature Categories
+{% for feature in features %}
+- **{{ feature.name }}** ({{ feature.feature_type.value }})
+  - Complexity: {{ feature.complexity.value }}
+  - Business Value: {{ feature.business_value }}
+  - Implementation Effort: {{ feature.implementation_effort }}
+{% endfor %}
+
+### Feature Distribution
+- **Basic Features:** {{ features|selectattr('complexity.value', 'eq', 'basic')|list|length }}
+- **Advanced Features:** {{ features|selectattr('complexity.value', 'in', ['advanced', 'expert'])|list|length }}
+- **High Business Value:** {{ features|selectattr('business_value', 'eq', 'high')|list|length }}
+
+## Best Practices
+
+### Priority Distribution
+- **High Priority (5):** {{ best_practices|selectattr('priority', 'eq', 5)|list|length }} recommendations
+- **Medium Priority (3-4):** {{ best_practices|selectattr('priority', 'ge', 3)|selectattr('priority', 'lt', 5)|list|length }} recommendations
+- **Low Priority (1-2):** {{ best_practices|selectattr('priority', 'lt', 3)|list|length }} recommendations
+
+### Top Recommendations
+{% for bp in best_practices|sort(attribute='priority', reverse=true)[:5] %}
+{{ loop.index }}. **{{ bp.title }}** (Priority: {{ bp.priority }})
+   - Category: {{ bp.category }}
+   - Business Impact: {{ bp.business_impact }}
+   - Implementation Effort: {{ bp.estimated_effort }}
+{% endfor %}
+
+## Analysis Summary
+
+### Key Insights
+- **System Complexity:** The HCM system demonstrates {{ "high" if stats.total_features > 100 else "moderate" if stats.total_features > 50 else "low" }} complexity
+- **Feature Coverage:** Comprehensive coverage across {{ metadata.analysis_config.modules_to_analyze|length }} major modules
+- **Best Practice Alignment:** {{ "Strong" if stats.total_best_practices > 50 else "Moderate" if stats.total_best_practices > 25 else "Basic" }} alignment with industry best practices
+
+### Performance Metrics
+- **Average Page Load Time:** {{ "%.2f"|format(pages|map(attribute='load_time')|sum / pages|length if pages else 0) }} seconds
+- **Complexity Distribution:** {{ "%.1f"|format(pages|map(attribute='complexity_score')|sum / pages|length if pages else 0) }} average complexity score
+- **Feature Density:** {{ "%.1f"|format((features|length) / (pages|length) if pages else 0) }} features per page
+
+## Recommendations
+
+### Immediate Actions (Next 30 Days)
+{% for bp in best_practices|selectattr('priority', 'eq', 5)[:3] %}
+- **{{ bp.title }}**: {{ bp.description[:100] }}...
+{% endfor %}
+
+### Short-term Improvements (Next 90 Days)
+{% for bp in best_practices|selectattr('priority', 'eq', 4)[:3] %}
+- **{{ bp.title }}**: {{ bp.description[:100] }}...
+{% endfor %}
+
+### Long-term Strategic Initiatives (Next 6-12 Months)
+{% for bp in best_practices|selectattr('priority', 'eq', 3)[:3] %}
+- **{{ bp.title }}**: {{ bp.description[:100] }}...
+{% endfor %}
+
+## Technical Details
+
+### Analysis Methodology
+- **Automated Scraping:** Advanced web scraping techniques for comprehensive page analysis
+- **Feature Extraction:** AI-powered feature identification and classification
+- **Best Practice Generation:** Machine learning-based recommendation engine
+- **Documentation Generation:** Automated multi-format documentation creation
+
+### Data Sources
+- **System Pages:** Direct analysis of HCM system interfaces
+- **Configuration Files:** Analysis of system configuration and settings
+- **User Interactions:** Pattern analysis of common user workflows
+- **Industry Standards:** Alignment with Oracle HCM best practices
+
+### Quality Assurance
+- **Validation:** Multi-layer validation of extracted data
+- **Cross-Reference:** Verification against official Oracle documentation
+- **Expert Review:** Human oversight of critical findings
+- **Continuous Updates:** Regular refresh of analysis data
+
+## Appendices
+
+### A. Detailed Page Analysis
+{% for page in pages %}
+#### {{ page.title }}
+- **URL:** {{ page.url }}
+- **Type:** {{ page.page_type.value }}
+- **Complexity Score:** {{ "%.2f"|format(page.complexity_score) }}
+- **Features:** {{ page.forms|length }} forms, {{ page.reports|length }} reports, {{ page.workflows|length }} workflows
+{% endfor %}
+
+### B. Feature Specifications
+{% for feature in features %}
+#### {{ feature.name }}
+- **Type:** {{ feature.feature_type.value }}
+- **Complexity:** {{ feature.complexity.value }}
+- **Business Value:** {{ feature.business_value }}
+- **Implementation Effort:** {{ feature.implementation_effort }}
+{% endfor %}
+
+### C. Best Practice Details
+{% for bp in best_practices %}
+#### {{ bp.title }}
+- **Priority:** {{ bp.priority }}
+- **Category:** {{ bp.category }}
+- **Business Impact:** {{ bp.business_impact }}
+- **Estimated Effort:** {{ bp.estimated_effort }}
+{% endfor %}
+
+---
+
+*This report was automatically generated by the Oracle HCM Analysis Platform. For questions or additional analysis, please contact the analysis team.*
+
+**Generated on:** {{ metadata.generated_at }}  
+**Platform Version:** {{ metadata.analysis_config.platform_version if metadata.analysis_config.platform_version else '1.0.0' }}
